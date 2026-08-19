@@ -236,12 +236,21 @@ html,body{max-width:100%;overflow-x:hidden}
 .fk-checklist{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
 .fk-checklist span{font-size:12.5px;font-weight:700;padding:5px 12px;border-radius:999px;
  background:var(--sk-surface);color:var(--sk-ink);border:1px solid var(--sk-line)}
+/* 折りたたみ式プロンプトボックス（2026-08-19〜）。長いプロンプトが常時全文
+   表示されるとページが間延びして最後まで読まれなくなる、との指摘で開閉式に変更。
+   コピーボタンはsummary内＝常に見える位置に置き、閉じたままコピーできるようにする。 */
 .fk-prompt{background:var(--sk-dark1);color:#E7E9EC;border-radius:12px;margin-top:12px;overflow:hidden}
 .fk-prompt-h{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 13px;
- border-bottom:1px solid rgba(255,255,255,.13);font-size:11px;letter-spacing:.06em}
-.fk-prompt-h span{color:var(--sk-hl);font-weight:900}
+ border-bottom:1px solid rgba(255,255,255,.13);font-size:11px;letter-spacing:.06em;cursor:pointer;
+ list-style:none}
+.fk-prompt-h::-webkit-details-marker{display:none}
+.fk-prompt-h>span:first-child{color:var(--sk-hl);font-weight:900;overflow:hidden;text-overflow:ellipsis;
+ white-space:nowrap}
+.fk-prompt-h-right{display:flex;align-items:center;gap:9px;flex:none}
 .fk-prompt-copy{background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:999px;
  padding:4px 12px;font-size:11px;font-weight:700;cursor:pointer}
+.fk-prompt-arrow{color:rgba(255,255,255,.55);font-size:11px;transition:transform .2s ease}
+.fk-prompt[open] .fk-prompt-arrow{transform:rotate(180deg)}
 .fk-prompt pre{margin:0;padding:14px;font-size:12px;line-height:1.95;white-space:pre-wrap;
  font-family:var(--sk-font);color:#DFE2E6}
 .fk-prompt pre i{font-style:normal;color:var(--sk-hl)}
@@ -328,7 +337,10 @@ html,body{max-width:100%;overflow-x:hidden}
 
 <header class="fk-hero">
  <div class="fk-hero-bg"><img src="assets/hero.jpg" alt="木製デスクの上に置かれた、風景デザインのTシャツと、デザイン編集ツールの画面が映るノートPC"></div>
+ 
  <h1>ChatGPTのデザインを、<br><em>Tシャツにして売る。</em></h1>
+ 
+ 
 </header>
 
 <section class="sk-sec">
@@ -380,13 +392,13 @@ html,body{max-width:100%;overflow-x:hidden}
      <p class="fk-step-text">ターゲットと条件を伝えて、Tシャツにしやすいテーマを提案してもらいます。著作権に触れるテーマを避ける指示も、あらかじめプロンプトに入れてあります。</p>
      
      
-     <div class="fk-prompt">
-      <div class="fk-prompt-h"><span>テーマ出し用プロンプト</span><button class="fk-prompt-copy" type="button">コピー</button></div>
+     <details class="fk-prompt">
+      <summary class="fk-prompt-h"><span>テーマ出し用プロンプト</span><span class="fk-prompt-h-right"><button class="fk-prompt-copy" type="button">コピー</button><span class="fk-prompt-arrow">&#9662;</span></span></summary>
       <pre>Tシャツとして販売しやすいテーマを10個考えてください。
 ターゲットは20〜40代の会社員です。
 SNSで見たときに興味を持ちやすく、Tシャツとして普段使いできるものにしてください。
 著作権や商標権を侵害する可能性のあるキャラクター・ブランド・有名人は除外してください。</pre>
-     </div>
+     </details>
      <div style="margin-top:14px;text-align:center"><a href="https://chatgpt.com/" target="_blank" rel="noopener" style="display:inline-block;padding:11px 22px;border-radius:999px;background:var(--sk-accent2);color:#fff;font-weight:800;font-size:13.5px;text-decoration:none">ChatGPTにアクセスする &rarr;</a></div>
     </div>
    </div>
@@ -398,8 +410,8 @@ SNSで見たときに興味を持ちやすく、Tシャツとして普段使い�
      <p class="fk-step-text">テーマ・ターゲットを伝えて、背景透過のデザイン画像を作ってもらいます。実際にこのプロンプトの流れで作った例がこちらです。</p>
      
      <div class="fk-step-img"><img src="assets/step2-design.jpg" alt="ChatGPTで生成した「AI WORKS, I CHILL」のTシャツデザイン例" loading="lazy"></div><p class="fk-step-img-cap">実際にChatGPTで生成したデザイン例</p>
-     <div class="fk-prompt">
-      <div class="fk-prompt-h"><span>画像生成用プロンプト</span><button class="fk-prompt-copy" type="button">コピー</button></div>
+     <details class="fk-prompt">
+      <summary class="fk-prompt-h"><span>画像生成用プロンプト</span><span class="fk-prompt-h-right"><button class="fk-prompt-copy" type="button">コピー</button><span class="fk-prompt-arrow">&#9662;</span></span></summary>
       <pre>Tシャツ販売用のデザインを作成してください。
 
 テーマ：【　　　　　　　　　　　】
@@ -411,7 +423,7 @@ SNSで見たときに興味を持ちやすく、Tシャツとして普段使い�
 
 キャラクター、ブランドロゴ、有名人など第三者の権利を侵害する要素は使用しないでください。
 普段着として使いやすいデザインにしてください。</pre>
-     </div>
+     </details>
      
     </div>
    </div>
@@ -543,7 +555,9 @@ SNSで見たときに興味を持ちやすく、Tシャツとして普段使い�
 
 <script>
 document.querySelectorAll('.fk-prompt-copy').forEach(function(btn){
-  btn.addEventListener('click', function(){
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
     var pre = btn.closest('.fk-prompt').querySelector('pre');
     navigator.clipboard.writeText(pre.textContent).then(function(){
       var t = btn.textContent; btn.textContent = '✓ コピー済み';
